@@ -1,0 +1,203 @@
+
+a {
+    transition: all ease .3s;
+}
+h2 {
+    @apply text-gray-800 font-semibold text-base;
+}
+
+.btn {
+    @apply bg-blue-600 text-white text-base font-medium inline-flex items-center justify-center text-center p-2 px-5 rounded-md hover:bg-blue-800 focus:outline-none h-10 cursor-pointer;
+    &--border {
+        @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-100;
+    }
+    &--full {
+        @apply w-full;
+    }
+    &--red {
+        @apply bg-red-500 hover:bg-red-600;
+    }
+    &--green {
+        @apply bg-green-500 hover:bg-green-600
+    }
+    &--black {
+        @apply bg-black text-white hover:bg-white hover:text-black
+    }
+}
+
+
+
+span.status {
+    @apply inline-block text-yellow-800 bg-yellow-100 font-medium text-xs px-5 py-1 rounded-lg;
+    &--red {
+        @apply text-red-800 bg-red-100;
+    }
+    &--green {
+        @apply text-green-800 bg-green-100;
+    }
+    &--gray {
+        @apply text-black bg-gray-100;
+    }
+    &--black {
+        @apply text-white bg-black;
+    }
+}
+
+
+
+.loader-line {
+    width: 100%;
+    height: 3px;
+    position: relative;
+    overflow: hidden;
+    background-color: #ddd;
+    // margin: 100px auto;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.loader-line:before {
+    content: "";
+    position: absolute;
+    left: -50%;
+    height: 3px;
+    width: 40%;
+    background-color: #189634;
+    -webkit-animation: lineAnim 1s linear infinite;
+    -moz-animation: lineAnim 1s linear infinite;
+    animation: lineAnim 1s linear infinite;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.selected-html-content {
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 179, 60, 1);
+    border-radius: 5px;
+}
+
+@keyframes lineAnim {
+    0% {
+        left: -40%;
+    }
+    50% {
+        left: 20%;
+        width: 80%;
+    }
+    100% {
+        left: 100%;
+        width: 100%;
+    }
+}
+
+.login-page-container{
+    background-image: url("https://www.iplt20.com/assets/images/teams-main-bg-2.png");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    color: #ffffff;
+}
+
+.dashboard-container {
+    background-color: #071026;
+    height: 100%;
+    background-image: url("https://www.iplt20.com/assets/images/teams-card-bg.svg");
+    display: flex;
+    flex-direction: column;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.dashboard-cover {
+    background-image: url("https://www.iplt20.com/assets/images/teams-main-bg-2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 200px;
+
+}
+
+.team-card-upper {
+    border-radius: 50%;
+    bottom: 160px;
+    right: 0px;
+    left: -26px;
+    // border: 1px solid red;
+    height: 319px;
+    width: 337px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    position: absolute;
+}
+
+.team-name {
+    font-family: alineaincisew01-boldregular;
+    position: absolute;
+    bottom: 80px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: large;
+    left: 55px;
+}
+.react-responsive-modal-modal{
+    @apply rounded-lg
+}
+
+.team-memeber-card{
+    // border flex items-center justify-center flex-col max-w-[200px] h-[100px] bg-white
+    border: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 200px;
+    height: 100px;
+    background-image: url("https://www.iplt20.com/assets/images/teams-logo-cover-img.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #031945;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+
+
+
+}
+
+// .swiper {
+//     width: calc(100% - 20%);;
+//     height: 100%;
+//   }
+// // .swiper-wrapper {
+// //     width: calc(100% - 20%);;
+// //     height: 100%;
+// //   }
+
+//   .swiper-slide {
+//     text-align: center;
+//     font-size: 18px;
+//     // background: #fff;
+//     color: #ffffff;
+
+//     /* Center slide text vertically */
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   .swiper-slide img {
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//   }

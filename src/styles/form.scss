@@ -1,0 +1,43 @@
+input[type="text"],[type="password"],[type="email"],[type="number"],[type="tel"], select, textarea {
+  @apply border border-gray-300 py-2 px-3 w-full rounded-md h-10;
+  &:focus {
+      @apply outline-blue-400;
+  }
+}
+input[type="date"]{
+  max-height: 38px;
+  @apply border border-gray-300 rounded py-2 px-3 w-full;
+  &:focus {
+      @apply outline-blue-400;
+  }
+}
+input[type="checkbox"] {
+  @apply border border-gray-300  w-4 h-4 rounded-sm;
+}
+input[type="radio"] {
+  @apply border border-gray-300 w-4 h-4 rounded-sm;
+}
+
+.form-label {
+  @apply font-medium text-sm leading-5;
+  color: #6C6C6C;
+}
+
+.form-head {
+ @apply text-3xl font-semibold;
+
+}
+
+.form-input {
+  color: #189634;
+  font-size: 14px;
+  
+}
+
+.form-input::placeholder {
+  font-size: 13px;
+}
+
+// .form-input[type="password"] {
+//   // color: #000;
+// }
