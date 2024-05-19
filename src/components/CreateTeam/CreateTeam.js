@@ -5,6 +5,8 @@ import TeamCard from "../TeamCard/TeamCard";
 import { PlusOutlined } from "@ant-design/icons";
 import { Input, Tag, theme, Tooltip } from "antd";
 import { HexColorPicker } from "react-colorful";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { toast } from "react-toastify";
 
 const tagInputStyle = {
   width: 64,
@@ -13,17 +15,35 @@ const tagInputStyle = {
   verticalAlign: "top",
 };
 
-const CreateTeam = ({ open, close }) => {
-  const [upperColor, setUpperColor] = useState("#FFCB03");
-  const [bgColor, setBgColor] = useState("#1C2232");
+const fields = {
+  team_logo: "team_logo",
+  team_members: "team_members",
+  team_name: "team_name",
+  upper_card_color: "upper_card_color",
+  lower_card_color: "lower_card_color",
+  team_score: "team_score",
+};
+
+const CreateTeam = ({ open, close, fetchTeamList, isEdit, teamData }) => {
+  const [upperColor, setUpperColor] = useState(
+    teamData?.upper_card_color || "#FFCB03"
+  );
+  const [bgColor, setBgColor] = useState(
+    teamData?.lower_card_color || "#1C2232"
+  );
+  const [data, setData] = useState(teamData || {});
   const { token } = theme.useToken();
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(teamData?.team_members || []);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [editInputIndex, setEditInputIndex] = useState(-1);
   const [editInputValue, setEditInputValue] = useState("");
   const inputRef = useRef(null);
   const editInputRef = useRef(null);
+
+  const handleSetData = (value, source) => {
+    setData((prev) => ({ ...prev, [source]: value }));
+  };
   useEffect(() => {
     if (inputVisible) {
       inputRef.current?.focus();
@@ -64,9 +84,64 @@ const CreateTeam = ({ open, close }) => {
     background: token.colorBgContainer,
     borderStyle: "dashed",
   };
-
   const [openUpperColorPicker, setOpenUpperColorPicker] = useState(false);
   const [openBgColorPicker, setOpenBgColorPicker] = useState(false);
+  const axios = useAxiosPrivate();
+
+  const handleCloseModal = () => {
+    setTags([]);
+    setData({});
+    close();
+  };
+
+  const creaetTeam = async () => {
+    const res = await axios
+      .post("team/createTeam", {
+        ...data,
+        team_members: tags,
+        upper_card_color: upperColor,
+        lower_card_color: bgColor,
+      })
+      .then((res) => res)
+      .catch((err) => err);
+    if (res?.data?.status) {
+      fetchTeamList();
+      handleCloseModal();
+    } else {
+      toast.error(res?.response?.data?.message || "Failed to create team");
+    }
+  };
+  const updateTeam = async () => {
+    const teamid = teamData?._id;
+    if (!teamid) {
+      return;
+    }
+    const reqObj = {
+      ...data,
+      team_members: tags,
+      upper_card_color: upperColor,
+      lower_card_color: bgColor,
+    };
+    delete reqObj._id;
+    const res = await axios
+      .patch(`team/updateTeamDetails/${teamid}`, reqObj)
+      .then((res) => res)
+      .catch((err) => err);
+    if (res?.data?.status) {
+      fetchTeamList();
+      handleCloseModal();
+    } else {
+      toast.error(res?.response?.data?.message || "Failed to update team");
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isEdit) {
+      updateTeam();
+    } else {
+      creaetTeam();
+    }
+  };
 
   return (
     <Modal
@@ -76,7 +151,10 @@ const CreateTeam = ({ open, close }) => {
       closeOnOverlayClick={false}
       showCloseIcon={false}
     >
-      <form className="flex flex-col items-center gap-3">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-3"
+      >
         <div className="relative">
           {/* Upper Color Picker Starts */}
           {openUpperColorPicker && (
@@ -134,17 +212,42 @@ const CreateTeam = ({ open, close }) => {
           {/* Bg Color Picker Ends */}
           <label>Preview</label>
           <TeamCard
-          isPreview={true}
+            isPreview={true}
+            data={{
+              team_logo: data?.team_logo || "",
+              team_name: data?.team_name || "",
+              upper_card_color: upperColor,
+              lower_card_color: bgColor,
+            }}
           />
         </div>
 
         <div>
-          <label>Team Logo</label>
-          <input type="text" />
+          <label>Logo URL </label>
+          <input
+            required
+            onChange={(e) => handleSetData(e.target.value, fields.team_logo)}
+            type="text"
+            value={data.team_logo}
+          />
         </div>
         <div>
           <label>Team Name</label>
-          <input type="text" />
+          <input
+            required
+            onChange={(e) => handleSetData(e.target.value, fields.team_name)}
+            type="text"
+            value={data.team_name}
+          />
+        </div>
+        <div>
+          <label>Team Score</label>
+          <input
+            required
+            onChange={(e) => handleSetData(e.target.value, fields.team_score)}
+            type="number"
+            value={data.team_score}
+          />
         </div>
         <div>
           <label>Team Members</label>
@@ -215,9 +318,17 @@ const CreateTeam = ({ open, close }) => {
             )}
           </div>
         </div>
-        <div className="flex justify-end gap-3 w-full">
-          <button type="button" onClick={close} className="btn btn--border">Cancel</button>
-          <button className="btn">Submit</button>
+        <div className="flex flex-col gap-3 w-full">
+          <button type="submit" className="btn">
+            {isEdit ? "Update" : "Create team"}
+          </button>
+          <button
+            type="button"
+            onClick={handleCloseModal}
+            className="btn btn--border"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </Modal>

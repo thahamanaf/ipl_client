@@ -4,16 +4,23 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<App />} />
       </Routes>
+      <ToastContainer newestOnTop={true} transition={Slide} />
     </BrowserRouter>
-  </React.StrictMode>
+  </Provider>
+</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

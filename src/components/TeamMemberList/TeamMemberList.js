@@ -1,70 +1,27 @@
 import React from "react";
 import TeamMemberCard from "./TeamMemberCard";
-import TeamCard from "../TeamCard/TeamCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import { Link } from "react-router-dom";
-import "swiper/css";
-import "swiper/css/navigation";
+import Modal from "react-responsive-modal";
+import { IoMdClose } from "react-icons/io";
 
-const TeamMemberList = () => {
-  const arr = new Array(10).fill(0);
 
+const TeamMemberList = ({ open, close, teamMembers }) => {
+  const members = teamMembers || []
   return (
-    <div className="dashboard-container relative">
-      <div className="dashboard-cover">
-        <button className="text-white absolute left-5 top-[10px] font-medium cursor-pointer">
-          <Link to="/dashboard">Dashboard</Link>
-        </button>
-        <button className="text-white absolute right-5 top-[10px] font-medium cursor-pointer">
-        <Link to="/">Logout</Link>
-        </button>
-        <div className="flex justify-center items-center h-full">
-          <div className="text-white  max-w-[calc(100%-20%)] h-full">
-            <div className="swiper-outer pb-6 mr-10 relative overflow-hidden  h-full">
-              <Swiper
-                modules={[Navigation]}
-                spaceBetween={1}
-                slidesPerView={4}
-                navigation
-                updateOnWindowResize
-                className="h-full"
-              >
-                {arr.map((item, index) => {
-                  return (
-                    <SwiperSlide key={`key${index}_swiper_slide`}>
-                      <div className="flex justify-center items-center h-full">
-                        <h1>Team</h1>
-                      </div>
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
-            </div>
-          </div>
+    <Modal open={open} onClose={close} center showCloseIcon={false}>
+      <div className="flex flex-col min-w-[400px]">
+        <div className="flex justify-between items-center gap-10 py-5">
+          <h1 className="tet-lg font-semibold">Team Members</h1>
+          <button className="btn btn--border" onClick={close}><IoMdClose/></button>
+        </div>
+        <div className="flex justify-center flex-wrap gap-5">
+          {
+            members.length ? members.map((item, index) => {
+              return (<TeamMemberCard key={`${index}_item_team_mem`} name={item}/>)
+            }) : "No team members found"
+          }
         </div>
       </div>
-      <div className="py-10 md:px-40">
-
-        <div className="flex justify-center py-3">  <TeamCard/></div>
-
-        <div className="flex flex-wrap gap-5 justify-center">
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
-       
-        </div>
-      </div>
-    </div>
+    </Modal>
   );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const TeamMemberCard = () => {
+const TeamMemberCard = ({ name }) => {
   return (
     <div className='team-memeber-card'>
-      <h1 className=''>Ravindra Sing Dhoni</h1>
+      <h1 className=''>{name || ""}</h1>
     </div>
   )
 }

@@ -141,11 +141,16 @@ span.status {
 .team-name {
     font-family: alineaincisew01-boldregular;
     position: absolute;
-    bottom: 80px;
+    bottom: 120px;
     color: #ffffff;
     font-weight: 600;
     font-size: large;
-    left: 55px;
+    text-align: center;
+    width: 100%;
+
+}
+.team-score {
+    bottom: 80px;
 }
 .react-responsive-modal-modal{
     @apply rounded-lg
@@ -169,7 +174,7 @@ span.status {
     font-weight: 600;
     text-align: center;
     text-transform: uppercase;
-
+    min-width: 150px;
 
 
 }
